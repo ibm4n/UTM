@@ -11,7 +11,7 @@ public class UTM {
     private final String SYMBOL_SEPARATOR = "1";
 
 
-    private Transition generateTransition(String transitions) {
+    /*private Transition generateTransition(String transitions) {
         String[] symbols = transitions.split(SYMBOL_SEPARATOR);
 
         return new Transition(symbols[0].length(), symbols[1].length(), symbols[2].length(), symbols[3].length(), symbols[4].length());
@@ -46,5 +46,5 @@ public class UTM {
     private void runTransitions(String word) {
 
 
-    }
+    }*/
 }

@@ -1,35 +1,37 @@
+import legacy.LegacyBand;
+
+/**
+ * Transition of Turing Machine
+ * <br>
+ * Possesses:
+ * <ul>
+ *     <li>starting state "q({@link Integer})"</li>
+ *     <li>symbol to read {@link Character}</li>
+ *     <li>end state "q({@link Integer})"</li>
+ *     <li>symbol to write {@link Character}</li>
+ *     <li>direction to move {@link LegacyBand.BandDirections}</li>
+ * </ul>
+ * <br>
+ * Can display transition as e.g. "(q1, 0, R) -> (q2, 1)"
+ */
 public class Transition {
-    private final int actualState;
-    private final int symbolsToRead;
-    private final int nextState;
-    private final int symbolsToWrite;
 
+    private final int startingState;
+    private final char symbolToRead;
+    private final int endState;
+    private final char symbolToWrite;
+    private final LegacyBand.BandDirections direction;
 
-    private final int direction;
-
-    public Transition(int actualState, int input, int nextState, int charToWrite, int direction) {
-        this.actualState = actualState;
-        this.symbolsToRead = input - 1;
-        this.nextState = nextState;
-        this.symbolsToWrite = charToWrite -1;
+    public Transition(int startingState, char symbolToRead, int endState, char symbolToWrite, LegacyBand.BandDirections direction) {
+        this.startingState = startingState;
+        this.symbolToRead = symbolToRead;
+        this.endState = endState;
+        this.symbolToWrite = symbolToWrite;
         this.direction = direction;
     }
 
-    public String getDirection() {
-        if (direction == 1) {
-            return "L";
-        }
-        return "R";
-    }
-
-
-
-
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("(q").append(actualState).append(",").append(symbolsToRead).append(")").append(" -> ")
-                .append("(q").append(nextState).append(",").append(symbolsToWrite).append(",").append(getDirection()).append(")");
-        return sb.toString();
+        return String.format("(q%d, %c) -> (q%d, %c, %s)", startingState, symbolToRead, endState, symbolToWrite, direction);
     }
 }
