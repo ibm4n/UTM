@@ -34,8 +34,12 @@ public class UTMRunner {
                 allowedCharacters);
 
         String convertedInput = convertNumberInputToTMInput(input);
+        if(convertedInput.isEmpty()) {
+            return;
+        }
+
         try {
-            turingMachine.run(convertedInput, true, 250);
+            turingMachine.run(convertedInput, false, 250);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -45,7 +49,7 @@ public class UTMRunner {
 
     private static String convertNumberInputToTMInput(String input) {
         StringBuilder convertedInput = new StringBuilder();
-        String multiplicationRegex = "\\d\\s?\\*\\s?\\d";
+        String multiplicationRegex = "\\d+\\s?\\*\\s?\\d+";
         if(input.matches(multiplicationRegex)) {
             String[] numbers = input.split("\\*");
             int a = Integer.parseInt(numbers[0].trim());
