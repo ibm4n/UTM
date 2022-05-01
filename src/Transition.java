@@ -14,10 +14,7 @@
  */
 public class Transition {
 
-    /**
-     * Amount of symbols 's' (parameters) in a transition ('s', 's') -> ('s', 's', 's') = 5
-     */
-    public static final int SYMBOL_AMOUNT = 5;
+
 
     private final int startingState;
     private final char symbolToRead;

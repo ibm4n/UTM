@@ -2,64 +2,68 @@ import java.util.*;
 
 public class UTMRunner {
 
-    private static char[] allowedCharacters = { '0', '1', Band.EMPTY_ELEMENT };
-    private static Map<Integer, Character> symbolMapper = new HashMap<>() {{
-        put(1, '0');
-        put(2, '1');
-        put(3, '_');
-    }};
-    private static Map<Integer, Band.BandDirections> directionMapper = new HashMap<>() {{
-        put(1, Band.BandDirections.R);
-        put(2, Band.BandDirections.L);
-    }};
+
+    private static final char STEP_MODE = '0';
+    private static final char RUN_MODE = '1';
+    private static final String TM_CODE = "101010010001011010001000000000100010110010100101011001000100010001011000101000010010110001000100000000100010011000010100001010110000100010000010001011000001010000010101100000100010000001010011000000101000000101001100000010001000000010001001100000001010000000101001100000001001000100101100000000100100000000101001100000000100010000000000001000100110000000001000100000000010001011000000000101000000000010001011000000000010100000000001000101100000000001000100000000000100010110000000000001010000000000001010011000000000000100010100010111";
+    private static boolean stepModeOn = false;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner modeScanner = new Scanner(System.in);
         boolean quit = false;
 
-        while(!quit) {
-            String input = scanner.nextLine();
-            if("q".equals(input)) {
+        boolean modeSelected = false;
+
+        System.out.println("""
+                Select the mode to run the calculations. Possible mods are:
+                0: Step-Mode
+                1: Run-Mode""");
+        while (!modeSelected) {
+            char input = modeScanner.next().charAt(0);
+            if (input == STEP_MODE) {
+                stepModeOn = true;
+                modeSelected = true;
+            } else if (input == RUN_MODE) {
+                stepModeOn = false;
+                modeSelected = true;
+            } else {
+                System.out.println("Invalid input: please try again");
+                System.out.println("""
+                        Select the mode to run the calculations. Possible mods are:
+                        0: Step-Mode
+                        1: Run-Mode""");
+            }
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        while (!quit) {
+            System.out.println("Enter your TM-Code & calculation:");
+            System.out.println(TM_CODE);
+
+            String inputCalcOnly = scanner.nextLine();
+            String input = TM_CODE + inputCalcOnly;
+
+            if ("q".equals(input)) {
                 quit = true;
             } else {
-                fun(input);
+                handleInput(input);
             }
         }
     }
 
-    private static void fun(String input) {
-        ArithmeticTM turingMachine = new ArithmeticTM(symbolMapper,
-                directionMapper,
-                UTMCodes.MULTIPLICATION_CODE,
-                allowedCharacters);
-
-        String convertedInput = convertNumberInputToTMInput(input);
-        if(convertedInput.isEmpty()) {
-            return;
-        }
+    private static void handleInput(String input) {
+        UTM turingMachine = new UTM();
 
         try {
-            turingMachine.run(convertedInput, false, 250);
+            turingMachine.run(input, stepModeOn, 250);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        System.out.printf("Calculation result = %d\n", turingMachine.readResult());
+        System.out.printf("Calculation result = %d\n", turingMachine.getResultFromBand());
+        System.out.println("--------------------------------------------------------");
+        System.out.println("\n" + "\n" + "\n" + "\n");
     }
 
-    private static String convertNumberInputToTMInput(String input) {
-        StringBuilder convertedInput = new StringBuilder();
-        String multiplicationRegex = "\\d+\\s?\\*\\s?\\d+";
-        if(input.matches(multiplicationRegex)) {
-            String[] numbers = input.split("\\*");
-            int a = Integer.parseInt(numbers[0].trim());
-            int b = Integer.parseInt(numbers[1].trim());
 
-            convertedInput.append("0".repeat(Math.max(0, a)));
-            convertedInput.append("_");
-            convertedInput.append("0".repeat(Math.max(0, b)));
-        }
-
-        return convertedInput.toString();
-    }
 }

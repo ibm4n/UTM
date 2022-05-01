@@ -6,7 +6,6 @@
 public class BandElement {
 
     private char value;
-
     private BandElement left;
     private BandElement right;
 

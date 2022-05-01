@@ -27,6 +27,7 @@ public class Band {
 
     /**
      * Initializes new band with 31 empty elements and reader on the element in the middle (16th element)
+     *
      * @param allowedCharacters accepted characters for band
      */
     public Band(char[] allowedCharacters) {
@@ -39,11 +40,12 @@ public class Band {
 
     /**
      * Sets a value on the element under the reader
+     *
      * @param value : {@link Character}
      * @throws IllegalArgumentException when the given value is not allowed (defined in constructor)
      */
     public void setValue(char value) throws IllegalArgumentException {
-        if(Arrays.stream(allowedCharacters).anyMatch(c -> value == c)) {
+        if (Arrays.stream(allowedCharacters).anyMatch(c -> value == c)) {
             elementOnReader.setValue(value);
         } else {
             throw new IllegalArgumentException(String.format("Character: %c, is not allowed for this machine", value));
@@ -52,6 +54,7 @@ public class Band {
 
     /**
      * Gets the value of element under reader
+     *
      * @return {@link Character} value
      */
     public char getValue() {
@@ -61,6 +64,7 @@ public class Band {
     /**
      * Moves the reader to the next element in given direction
      * and adds an empty element in the same direction to ensure 15 elements surrounding reader
+     *
      * @param direction {@link BandDirections}
      */
     public void move(BandDirections direction) {
@@ -92,12 +96,13 @@ public class Band {
 
     /**
      * Adds new empty {@link BandElement}s in a certain direction
-     * @param amount of elements to create
+     *
+     * @param amount    of elements to create
      * @param direction direction to create
      */
     private void addEmptyFor(int amount, BandDirections direction) {
         BandElement current = elementOnReader;
-        for(int i = 0; i < amount; i++) {
+        for (int i = 0; i < amount; i++) {
             BandElement next = null;
             switch (direction) {
                 case R -> {
@@ -117,6 +122,7 @@ public class Band {
 
     /**
      * Adds an empty element at the end of given direction if there are less than 15 elements after reader (count = 14)
+     *
      * @param direction to iterate until the end
      */
     private void addEmptyAtEnd(BandDirections direction) {
@@ -124,11 +130,11 @@ public class Band {
         switch (direction) {
             case R -> {
                 int count = 0;
-                while(current.getRight() != null) {
+                while (current.getRight() != null) {
                     current = current.getRight();
                     count++;
                 }
-                if(count == 14) {
+                if (count == 14) {
                     BandElement next = new BandElement();
                     next.setLeftElement(current);
                     current.setRightElement(next);
@@ -136,11 +142,11 @@ public class Band {
             }
             case L -> {
                 int count = 0;
-                while(current.getLeft() != null) {
+                while (current.getLeft() != null) {
                     current = current.getLeft();
                     count++;
                 }
-                if(count == 14) {
+                if (count == 14) {
                     BandElement next = new BandElement();
                     next.setRightElement(current);
                     current.setLeftElement(next);
@@ -151,6 +157,7 @@ public class Band {
 
     /**
      * Gets the last possible element in given direction
+     *
      * @param direction {@link BandDirections} to go in
      * @return last {@link BandElement}
      */
@@ -158,12 +165,12 @@ public class Band {
         BandElement current = elementOnReader;
         switch (direction) {
             case R -> {
-                while(current.getRight() != null) {
+                while (current.getRight() != null) {
                     current = current.getRight();
                 }
             }
             case L -> {
-                while(current.getLeft() != null) {
+                while (current.getLeft() != null) {
                     current = current.getLeft();
                 }
             }
@@ -174,6 +181,7 @@ public class Band {
 
     /**
      * Creates two lines: one with a pointer on current element under the reader and one with the band values
+     *
      * @return Pointer for current element under reader and elements in band
      */
     @Override
@@ -182,10 +190,10 @@ public class Band {
         StringBuilder bandBuilder = new StringBuilder("| ");
 
         BandElement current = getFurthestElement(BandDirections.L);
-        while(current != null) {
+        while (current != null) {
             // Reached element on reader
-            if(elementOnReader.hashCode() == current.hashCode()) {
-                positionBuilder.append("↓   ");
+            if (elementOnReader.hashCode() == current.hashCode()) {
+                positionBuilder.append("↑   ");
             } else {
                 positionBuilder.append("    ");
             }
@@ -194,7 +202,7 @@ public class Band {
             current = current.getRight();
         }
 
-        return positionBuilder + "\n" + bandBuilder;
+        return bandBuilder + "\n" + positionBuilder;
     }
 
 
