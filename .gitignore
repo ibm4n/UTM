@@ -4,6 +4,7 @@
 *.ids
 *.iws
 .idea/
+./out
 
 # Eclipse files
 .project
