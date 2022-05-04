@@ -23,14 +23,17 @@ public class UTM {
     }
 
 
-    public void generateTM(String s) {
+    public void generateTM(String s, boolean removeLeadingZero) {
 
-        //   String inputStringWithoutLeadingOne = s.substring(1, s.length());
+        String input = "";
+        if (removeLeadingZero) {
+            input = s.substring(1, s.length());
+        } else {
+            input = s;
+        }
 
-        String inputStringWithoutLeadingOne = s;
-
-        String word = inputStringWithoutLeadingOne.split(TM_WORD_SEPARATOR)[1];
-        String tmCode = inputStringWithoutLeadingOne.split(TM_WORD_SEPARATOR)[0];
+        String word = input.split(TM_WORD_SEPARATOR)[1];
+        String tmCode = input.split(TM_WORD_SEPARATOR)[0];
 
         String[] transitionsAsStrings = tmCode.split(TRANSITION_SEPARATOR);
 
@@ -89,7 +92,7 @@ public class UTM {
         }
         print("END-State:");
         print(band.toString());
-        print("Berechnungsschritte: "+countOfSteps);
+        print("Berechnungsschritte: " + countOfSteps);
         print("Result: " + readResultFromBand());
 
 
