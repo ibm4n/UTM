@@ -53,7 +53,7 @@ public class UTM {
 
     }
 
-    public void run() throws InterruptedException {
+    public void run(boolean stepModeOn) throws InterruptedException {
 
         boolean hasEnded = false;
         int countOfSteps = 0;
@@ -65,7 +65,7 @@ public class UTM {
 
 
         Transition currentTransition = startTransition;
-
+        print("Starting State:");
         print(band.toString());
 
 
@@ -74,14 +74,15 @@ public class UTM {
             var symbolToWrite = currentTransition.getSymbolToWrite();
 
 
-            print(currentTransition.toString());
-
 
             band.replaceSymbolAtCurrentPosition(symbolToWrite);
             band.move(currentTransition.getDirection());
 
-            print(band.toString());
-
+            if (stepModeOn) {
+                print(currentTransition.toString());
+                print(band.toString());
+                Thread.sleep(300);
+            }
 
             currentTransition = getNextTransition(currentTransition.getNextState());
 
