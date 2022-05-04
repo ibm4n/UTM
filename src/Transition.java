@@ -1,28 +1,54 @@
 public class Transition {
     private final int actualState;
-    private final int symbolsToRead;
+    private final char symbolsToRead;
     private final int nextState;
-    private final int symbolsToWrite;
+    private final char symbolsToWrite;
 
 
     private final int direction;
 
     public Transition(int actualState, int input, int nextState, int charToWrite, int direction) {
         this.actualState = actualState;
-        this.symbolsToRead = input - 1;
+
+
+        switch (input) {
+            case 1 -> this.symbolsToRead = '0';
+            case 2 -> this.symbolsToRead = '1';
+            default -> this.symbolsToRead = '_';
+        }
+        switch (charToWrite) {
+            case 1 -> this.symbolsToWrite = '0';
+            case 2 -> this.symbolsToWrite = '1';
+            default -> this.symbolsToWrite = '_';
+        }
+
         this.nextState = nextState;
-        this.symbolsToWrite = charToWrite -1;
         this.direction = direction;
     }
 
-    public String getDirection() {
-        if (direction == 1) {
-            return "L";
+    public Band.Direction getDirection() {
+        if (direction == 2) {
+            return Band.Direction.R;
         }
-        return "R";
+        return Band.Direction.L;
+    }
+
+    public int getTransitionId() {
+        return actualState;
+    }
+
+    public int getNextState() {
+        return nextState;
     }
 
 
+    public Character getSymbolToWrite() {
+        return symbolsToWrite;
+    }
+
+    public Character getSymbolToRead() {
+        return symbolsToRead;
+    }
 
 
     @Override

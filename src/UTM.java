@@ -3,6 +3,9 @@ import java.util.Arrays;
 
 public class UTM {
 
+    private static final int START_TRANSITION_NUMBER = 1;
+    private static final int END_TRANSITION_NUMBER = 100;
+
     private ArrayList<Transition> transitions = new ArrayList<>();
 
     private Band band;
@@ -10,6 +13,7 @@ public class UTM {
     private final String TRANSITION_SEPARATOR = "11";
     private final String SYMBOL_SEPARATOR = "1";
 
+    private String word = "";
 
     private Transition generateTransition(String transitions) {
         String[] symbols = transitions.split(SYMBOL_SEPARATOR);
@@ -21,7 +25,9 @@ public class UTM {
 
     public void generateTM(String s) {
 
-        String inputStringWithoutLeadingOne = s.substring(1, s.length());
+        //   String inputStringWithoutLeadingOne = s.substring(1, s.length());
+
+        String inputStringWithoutLeadingOne = s;
 
         String word = inputStringWithoutLeadingOne.split(TM_WORD_SEPARATOR)[1];
         String tmCode = inputStringWithoutLeadingOne.split(TM_WORD_SEPARATOR)[0];
@@ -32,19 +38,79 @@ public class UTM {
         for (String transition : transitionsAsStrings) {
             transitions.add(generateTransition(transition));
         }
-
+        print("\n" + "-----------------------------------Transitions-----------------------------------------");
         for (Transition transition : transitions) {
 
-            System.out.println(transition.toString());
+            print(transition.toString());
         }
+        print("----------------------------------------------------------------------------" + "\n");
         Character[] wordsAsCharArray = word.chars().mapToObj(c -> (char) c).toArray(Character[]::new);
         band = new Band(Arrays.stream(wordsAsCharArray).toList());
-        runTransitions(word);
+        this.word = word;
 
     }
 
-    private void runTransitions(String word) {
+    public void run() throws InterruptedException {
+
+        boolean hasEnded = false;
+        int countOfSteps = 0;
+        Transition startTransition = getNextTransition(START_TRANSITION_NUMBER);
+
+        if (startTransition == null) {
+            print("Something with the Start Transition is fucked. Please check. Specified start transition is: q" + START_TRANSITION_NUMBER);
+        }
 
 
+        Transition currentTransition = startTransition;
+
+        print(band.toString());
+
+
+        while (!hasEnded) {
+            countOfSteps++;
+            var symbolToWrite = currentTransition.getSymbolToWrite();
+
+
+            print(currentTransition.toString());
+
+
+            band.replaceSymbolAtCurrentPosition(symbolToWrite);
+            band.move(currentTransition.getDirection());
+
+            print(band.toString());
+
+
+            currentTransition = getNextTransition(currentTransition.getNextState());
+
+
+            if (currentTransition == null) {
+                hasEnded = true;
+            }
+        }
+        print("END-State:");
+        print(band.toString());
+        print("Berechnungsschritte: "+countOfSteps);
+        print("Result: " + readResultFromBand());
+
+
+    }
+
+    private String readResultFromBand() {
+        return String.valueOf(band.countRemainingSymbols());
+    }
+
+
+    private Transition getNextTransition(int transitionNumber) {
+        return transitions.stream()
+                .filter(x -> transitionNumber == x.getTransitionId() && band.getSymbolAtCurrentPosition() == x.getSymbolToRead())
+                .findAny()
+                .orElse(null);
+
+    }
+
+
+    private void print(String message) {
+
+        System.out.println(message);
     }
 }
