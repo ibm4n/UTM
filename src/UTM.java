@@ -23,10 +23,10 @@ public class UTM {
     }
 
 
-    public void generateTM(String s, boolean removeLeadingZero) {
+    public void generateTM(String s, boolean removeLeadingOne) {
 
         String input = "";
-        if (removeLeadingZero) {
+        if (removeLeadingOne) {
             input = s.substring(1, s.length());
         } else {
             input = s;
