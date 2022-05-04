@@ -1,68 +1,20 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class UTMRunner {
 
 
-    private static final char STEP_MODE = '0';
-    private static final char RUN_MODE = '1';
-    private static final String TM_CODE = "101010010001011010001000000000100010110010100101011001000100010001011000101000010010110001000100000000100010011000010100001010110000100010000010001011000001010000010101100000100010000001010011000000101000000101001100000010001000000010001001100000001010000000101001100000001001000100101100000000100100000000101001100000000100010000000000001000100110000000001000100000000010001011000000000101000000000010001011000000000010100000000001000101100000000001000100000000000100010110000000000001010000000000001010011000000000000100010100010111";
-    private static boolean stepModeOn = false;
-
     public static void main(String[] args) {
-        Scanner modeScanner = new Scanner(System.in);
-        boolean quit = false;
 
-        boolean modeSelected = false;
-
-        System.out.println("""
-                Select the mode to run the calculations. Possible mods are:
-                0: Step-Mode
-                1: Run-Mode""");
-        while (!modeSelected) {
-            char input = modeScanner.next().charAt(0);
-            if (input == STEP_MODE) {
-                stepModeOn = true;
-                modeSelected = true;
-            } else if (input == RUN_MODE) {
-                stepModeOn = false;
-                modeSelected = true;
-            } else {
-                System.out.println("Invalid input: please try again");
-                System.out.println("""
-                        Select the mode to run the calculations. Possible mods are:
-                        0: Step-Mode
-                        1: Run-Mode""");
-            }
-        }
-
-        Scanner scanner = new Scanner(System.in);
-        while (!quit) {
-            System.out.println("Enter your TM-Code & calculation:");
-            System.out.println(TM_CODE);
-
-            String inputCalcOnly = scanner.nextLine();
-            String input = TM_CODE + inputCalcOnly;
-
-            if ("q".equals(input)) {
-                quit = true;
-            } else {
-                handleInput(input);
-            }
-        }
-    }
-
-    private static void handleInput(String input) {
-        UTM turingMachine = new UTM();
-
+        UTM utm = new UTM();
+        utm.generateTM("0100010010001001101010001000100110010001000000000000000100010011001010001000100110001000100001000100110001010001010011000010001000000000000000010001011000010100000100010011000001000100000010001001100000101000001010011000000100010000000101011000000101000000101001100000001000100000000100010110000000101000000010101100000000100010000000000101011000000001010000000001010110000000001000100001010011000000000101000000000101011000000000010001000000000001000101100000000001010000000000101011000000000001000100000000000001000100110000000000010100000000000010101100000000000010001010001001100000000000010100000000000010101100000000000001000100000000000001000100110000000000000101000000000000001000100110000000000000010100000000000000100010011000000000000000101000000000000000100010011000000000000000010001000000000000000001000101100000000000000001010000000000000000100010110000000000000000010100000000000000000100010111000_00");
         try {
-            turingMachine.run(input, stepModeOn, 250);
+            utm.run();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        System.out.printf("Calculation result = %d\n", turingMachine.getResultFromBand());
-        System.out.println("--------------------------------------------------------");
-        System.out.println("\n" + "\n" + "\n" + "\n");
+
     }
 
 

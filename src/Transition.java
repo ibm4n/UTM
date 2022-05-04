@@ -1,57 +1,61 @@
-/**
- * Transition of Turing Machine
- * <br>
- * Possesses:
- * <ul>
- *     <li>starting state "q({@link Integer})"</li>
- *     <li>symbol to read {@link Character}</li>
- *     <li>end state "q({@link Integer})"</li>
- *     <li>symbol to write {@link Character}</li>
- *     <li>direction to move {@link Band.BandDirections}</li>
- * </ul>
- * <br>
- * Can display transition as e.g. "(q1, 0, R) -> (q2, 1)"
- */
 public class Transition {
+    private final int actualState;
+    private final char symbolsToRead;
+    private final int nextState;
+    private final char symbolsToWrite;
 
 
+    private final int direction;
 
-    private final int startingState;
-    private final char symbolToRead;
-    private final int endState;
-    private final char symbolToWrite;
-    private final Band.BandDirections direction;
+    public Transition(int actualState, int input, int nextState, int charToWrite, int direction) {
+        this.actualState = actualState;
 
-    public Transition(int startingState, char symbolToRead, int endState, char symbolToWrite, Band.BandDirections direction) {
-        this.startingState = startingState;
-        this.symbolToRead = symbolToRead;
-        this.endState = endState;
-        this.symbolToWrite = symbolToWrite;
+
+        switch (input) {
+            case 1 -> this.symbolsToRead = '0';
+            case 2 -> this.symbolsToRead = '1';
+            default -> this.symbolsToRead = '_';
+        }
+        switch (charToWrite) {
+            case 1 -> this.symbolsToWrite = '0';
+            case 2 -> this.symbolsToWrite = '1';
+            default -> this.symbolsToWrite = '_';
+        }
+
+        this.nextState = nextState;
         this.direction = direction;
     }
 
+    public Band.Direction getDirection() {
+        if (direction == 2) {
+            return Band.Direction.R;
+        }
+        return Band.Direction.L;
+    }
+
+    public int getTransitionId() {
+        return actualState;
+    }
+
+    public int getNextState() {
+        return nextState;
+    }
+
+
+    public Character getSymbolToWrite() {
+        return symbolsToWrite;
+    }
+
+    public Character getSymbolToRead() {
+        return symbolsToRead;
+    }
+
+
     @Override
     public String toString() {
-        return String.format("(q%d, %c) -> (q%d, %c, %s)", startingState, symbolToRead, endState, symbolToWrite, direction);
-    }
-
-    public int getStartingState() {
-        return startingState;
-    }
-
-    public char getSymbolToRead() {
-        return symbolToRead;
-    }
-
-    public int getEndState() {
-        return endState;
-    }
-
-    public char getSymbolToWrite() {
-        return symbolToWrite;
-    }
-
-    public Band.BandDirections getDirection() {
-        return direction;
+        StringBuilder sb = new StringBuilder();
+        sb.append("(q").append(actualState).append(",").append(symbolsToRead).append(")").append(" -> ")
+                .append("(q").append(nextState).append(",").append(symbolsToWrite).append(",").append(getDirection()).append(")");
+        return sb.toString();
     }
 }
