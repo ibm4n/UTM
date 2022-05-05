@@ -81,6 +81,7 @@ public class UTM {
             if (stepModeOn) {
                 print(currentTransition.toString());
                 print("Symbol at head: " + band.getSymbolAtCurrentPosition());
+                print("Number of calculation steps up to now: " + countOfSteps);
                 print(band.toString());
                 Thread.sleep(300);
             }
@@ -94,7 +95,7 @@ public class UTM {
         }
         print("END-State:");
         print(band.toString());
-        print("Berechnungsschritte: " + countOfSteps);
+        print("Number of calculation steps: " + countOfSteps);
         print("Result: " + readResultFromBand());
 
 

@@ -1,8 +1,8 @@
 public class Transition {
     private final int actualState;
-    private final char symbolsToRead;
+    private final char symbolToRead;
     private final int nextState;
-    private final char symbolsToWrite;
+    private final char symbolToWrite;
 
 
     private final int direction;
@@ -12,14 +12,18 @@ public class Transition {
 
 
         switch (input) {
-            case 1 -> this.symbolsToRead = '0';
-            case 2 -> this.symbolsToRead = '1';
-            default -> this.symbolsToRead = '_';
+            case 1 -> this.symbolToRead = '0';
+            case 2 -> this.symbolToRead = '1';
+            case 4 -> this.symbolToRead = 'X';
+            case 5 -> this.symbolToRead = 'Y';
+            default -> this.symbolToRead = '_';
         }
         switch (charToWrite) {
-            case 1 -> this.symbolsToWrite = '0';
-            case 2 -> this.symbolsToWrite = '1';
-            default -> this.symbolsToWrite = '_';
+            case 1 -> this.symbolToWrite = '0';
+            case 2 -> this.symbolToWrite = '1';
+            case 4 -> this.symbolToWrite = 'X';
+            case 5 -> this.symbolToWrite = 'Y';
+            default -> this.symbolToWrite = '_';
         }
 
         this.nextState = nextState;
@@ -43,19 +47,19 @@ public class Transition {
 
 
     public Character getSymbolToWrite() {
-        return symbolsToWrite;
+        return symbolToWrite;
     }
 
     public Character getSymbolToRead() {
-        return symbolsToRead;
+        return symbolToRead;
     }
 
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("(q").append(actualState).append(",").append(symbolsToRead).append(")").append(" -> ")
-                .append("(q").append(nextState).append(",").append(symbolsToWrite).append(",").append(getDirection()).append(")");
+        sb.append("(q").append(actualState).append(",").append(symbolToRead).append(")").append(" -> ")
+                .append("(q").append(nextState).append(",").append(symbolToWrite).append(",").append(getDirection()).append(")");
         return sb.toString();
     }
 }
