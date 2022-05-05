@@ -16,8 +16,8 @@ Binärzeichenreihe. Als Ausgabe (Bildschirm) wird folgendes erwartet:
 - c) das Band mit mindestens 15 Elementen vor und nach dem Lese-/Schreibkopf,
 - d) die aktuelle Position des Lese-/Schreibkopfes und
 - e) ein Zähler, der die Anzahl der bisher durchgeführten Berechnungsschritte angibt.
-- f)  Optional: Grafische Ausgabe des Übergangsdiagramms im Step-Modus, Grafisches Interface, usw. Bitte nur angehen,
-  wenn Sie wirklich Zeit dazu haben.
+- f)  ~~Optional: Grafische Ausgabe des Übergangsdiagramms im Step-Modus, Grafisches Interface, usw. Bitte nur angehen,
+  wenn Sie wirklich Zeit dazu haben.~~
 
 Es sind zwei Modi zu realisieren:
 
