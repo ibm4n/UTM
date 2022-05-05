@@ -74,12 +74,12 @@ public class UTM {
             var symbolToWrite = currentTransition.getSymbolToWrite();
 
 
-
             band.replaceSymbolAtCurrentPosition(symbolToWrite);
             band.move(currentTransition.getDirection());
 
             if (stepModeOn) {
                 print(currentTransition.toString());
+                print("Symbol at head: " + band.getSymbolAtCurrentPosition());
                 print(band.toString());
                 Thread.sleep(300);
             }
