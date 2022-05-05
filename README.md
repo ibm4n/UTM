@@ -46,10 +46,10 @@ This turing machine can handle the following inputs:
 | `left ` | `0`     |
 
 ### Version 1: -> `0,1,X,Y,_`
-|  state status | state   |
+|  state  | number   |
 |---------|---------|
-| start state  | `q1`     |
-| end state  | `q2`    |
+| start   | `q1`     |
+| end   | `q2`    |
 
 ```
 # 2*2
@@ -79,10 +79,10 @@ This turing machine can handle the following inputs:
 ```
 
 ### Version 2: -> `0,1,_`
-|  state status | state   |
+|  state  | number   |
 |---------|---------|
-| start state  | `q1`     |
-| end state  | `multiple`    |
+| start   | `q1`     |
+| end   | `multiple`    |
 
 ```
 # 2*2
