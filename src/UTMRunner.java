@@ -46,7 +46,11 @@ public class UTMRunner {
                 try {
                     utm.run(stepModeOn);
                 } catch (InterruptedException e) {
+                    System.out.println("Ooo no. Something blew up.");
+                    System.out.println("Error: ");
                     e.printStackTrace();
+                    quit = true;
+
                 }
             }
         }

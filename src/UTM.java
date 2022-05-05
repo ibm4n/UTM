@@ -61,6 +61,7 @@ public class UTM {
 
         if (startTransition == null) {
             print("Something with the Start Transition is fucked. Please check. Specified start transition is: q" + START_TRANSITION_NUMBER);
+            throw new InterruptedException();
         }
 
 
