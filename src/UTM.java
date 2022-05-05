@@ -4,7 +4,6 @@ import java.util.Arrays;
 public class UTM {
 
     private static final int START_TRANSITION_NUMBER = 1;
-    private static final int END_TRANSITION_NUMBER = 100;
 
     private ArrayList<Transition> transitions = new ArrayList<>();
 
@@ -13,7 +12,7 @@ public class UTM {
     private final String TRANSITION_SEPARATOR = "11";
     private final String SYMBOL_SEPARATOR = "1";
 
-    private String word = "";
+
 
     private Transition generateTransition(String transitions) {
         String[] symbols = transitions.split(SYMBOL_SEPARATOR);
@@ -41,22 +40,22 @@ public class UTM {
         for (String transition : transitionsAsStrings) {
             transitions.add(generateTransition(transition));
         }
+
         print("\n" + "-----------------------------------Transitions-----------------------------------------");
         for (Transition transition : transitions) {
-
             print(transition.toString());
         }
         print("----------------------------------------------------------------------------" + "\n");
+
         Character[] wordsAsCharArray = word.chars().mapToObj(c -> (char) c).toArray(Character[]::new);
         band = new Band(Arrays.stream(wordsAsCharArray).toList());
-        this.word = word;
-
     }
 
     public void run(boolean stepModeOn) throws InterruptedException {
 
         boolean hasEnded = false;
         int countOfSteps = 0;
+
         Transition startTransition = getNextTransition(START_TRANSITION_NUMBER);
 
         if (startTransition == null) {
@@ -72,8 +71,9 @@ public class UTM {
 
         while (!hasEnded) {
             countOfSteps++;
-            var symbolToWrite = currentTransition.getSymbolToWrite();
 
+
+            Character symbolToWrite = currentTransition.getSymbolToWrite();
 
             band.replaceSymbolAtCurrentPosition(symbolToWrite);
             band.move(currentTransition.getDirection());

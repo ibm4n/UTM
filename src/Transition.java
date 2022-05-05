@@ -3,8 +3,6 @@ public class Transition {
     private final char symbolToRead;
     private final int nextState;
     private final char symbolToWrite;
-
-
     private final int direction;
 
     public Transition(int actualState, int input, int nextState, int charToWrite, int direction) {
@@ -44,7 +42,6 @@ public class Transition {
     public int getNextState() {
         return nextState;
     }
-
 
     public Character getSymbolToWrite() {
         return symbolToWrite;
